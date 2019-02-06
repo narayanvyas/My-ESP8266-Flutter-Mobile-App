@@ -27,6 +27,8 @@ dependencies:
   image_picker_saver:
   zoomable_image:
   image:
+  esys_flutter_share:
+  advanced_share:
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +49,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/
+   - assets/images/bg/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

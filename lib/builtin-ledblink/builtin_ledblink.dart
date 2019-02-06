@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 import './code.dart';
 import 'package:image_picker_saver/image_picker_saver.dart';
 
@@ -51,6 +53,13 @@ class _BuiltinLedState extends State<BuiltinLed> {
                 _onImageSaveButtonPressed(
                     'https://raw.githubusercontent.com/narayanvyas/Human-Detector-With-PIR-HC-SR501-And-Ultrasonic-Sensor-HC-SR04/master/Breadboard%20Diagram.jpeg');
               },
+            ),
+            RaisedButton(
+              child: Text("Share Image"),
+              onPressed: () async {
+                final ByteData bytes = await rootBundle.load('assets/1_builtin_led_gd.jpeg');
+                await EsysFlutterShare.shareImage('graphical_diagram.jpeg', bytes, 'Graphical Diagram');
+                },
             ),
             Text(
               'My LED ',
