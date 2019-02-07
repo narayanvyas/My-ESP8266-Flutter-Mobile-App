@@ -24,6 +24,7 @@ dependencies:
   webview_flutter:
   image:
   esys_flutter_share:
+  permission_handler:
   flutter_downloader:
 
 dev_dependencies:
