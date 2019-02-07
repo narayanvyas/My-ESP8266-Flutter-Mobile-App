@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'builtin-ledblink/builtin_ledblink.dart';
+import 'package:myesp8266/navigation_menus.dart';
+import 'route_page.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,46 +8,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  BuildContext scaffoldContext;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromRGBO(255, 255, 255, 0.95),
-        appBar: AppBar(
-          title: Text("My ESP8266"),
-          centerTitle: true,
-        ),
-        drawer: Drawer(
-          child: ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                child: Text(''),
-                decoration: BoxDecoration(
-                  color: Colors.teal,
-                ),
-              ),
-              ListTile(
-                title: Text('Home'),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text('Builtin LED Blink'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => BuiltinLed()),
-                  );
-                },
-              ),
-              ListTile(
-                title: Text('LED Blink'),
-                onTap: () {},
-              ),
-            ],
-          ),
-        ),
-        body: Container(
+      backgroundColor: Color.fromRGBO(255, 255, 255, 0.95),
+      appBar: AppBar(
+        title: Text("NodeMCU With Flutter"),
+        centerTitle: true,
+      ),
+      drawer: Drawer(
+        child: NavigationMenus(),
+      ),
+      body: Builder(builder: (BuildContext context) {
+        scaffoldContext = context;
+        return Container(
             child: GridView.extent(
           childAspectRatio: 1.3,
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 19.0),
@@ -56,15 +31,17 @@ class _HomeState extends State<Home> {
           addAutomaticKeepAlives: true,
           crossAxisSpacing: 20.0,
           children: <Widget>[
-            projectGridBlock("PIR SENSOR"),
-            projectGridBlock("SERVO MOTOR"),
-            projectGridBlock("STEPPER MOT."),
-            projectGridBlock("ARDUINO UNO"),
+            projectGridBlock('PIR Sensor', 'builtin_led'),
+            projectGridBlock("SERVO MOTOR", 'servo_motor'),
+            projectGridBlock("STEPPER MOT.", 'builtin_led'),
+            projectGridBlock("ARDUINO UNO", 'servo_motor'),
           ],
-        )));
+        ));
+      }),
+    );
   }
 
-  Widget projectGridBlock(String text) {
+  Widget projectGridBlock(String text, String mainPageCode) {
     return MaterialButton(
       padding: EdgeInsets.all(0),
       color: Colors.white,
@@ -92,8 +69,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       onPressed: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => BuiltinLed()));
+        MainPageRoute(context: context, mainPageCode: mainPageCode);
       },
     );
   }

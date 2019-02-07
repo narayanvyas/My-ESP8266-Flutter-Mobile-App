@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
@@ -9,25 +8,22 @@ Future<String> get _localPath async {
   final directory = await getExternalStorageDirectory();
   return directory.path;
 }
+
 void downloadFile(String url, String fileName) async {
   final path = await _localPath;
-  Map<PermissionGroup, PermissionStatus> permissions =
-      await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+  await PermissionHandler().requestPermissions([PermissionGroup.storage]);
   PermissionStatus permission =
       await PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
   if (permission == PermissionStatus.granted) {
     await FlutterDownloader.enqueue(
       url:
-          'https://raw.githubusercontent.com/narayanvyas/Human-Detector-With-PIR-HC-SR501-And-Ultrasonic-Sensor-HC-SR04/master/Breadboard%20Diagram.jpeg',
+          url,
       savedDir: '$path/',
       fileName: fileName,
-      showNotification:
-          true, // show download progress in status bar (for Android)
-      openFileFromNotification:
-          true, // click on notification to open downloaded file (for Android)
+      showNotification: true,
+      openFileFromNotification: true,
     );
-  }
-  else {
+  } else {
     print('Permission Deniened!');
   }
 }

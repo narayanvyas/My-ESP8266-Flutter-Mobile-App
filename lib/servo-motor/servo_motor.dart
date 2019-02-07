@@ -14,12 +14,12 @@ displaySnackBar(BuildContext context, String msg) {
   Scaffold.of(scaffoldContext).showSnackBar(snackBar);
 }
 
-class BuiltinLed extends StatefulWidget {
+class ServoMotor extends StatefulWidget {
   @override
-  _BuiltinLedState createState() => _BuiltinLedState();
+  _ServoMotorState createState() => _ServoMotorState();
 }
 
-class _BuiltinLedState extends State<BuiltinLed> {
+class _ServoMotorState extends State<ServoMotor> {
   String _status = "";
   String _btnText = "LED-";
   String url = 'http://192.168.1.200:80/';
@@ -37,7 +37,7 @@ class _BuiltinLedState extends State<BuiltinLed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Builtin LED Blink"), centerTitle: true),
+      appBar: AppBar(title: Text("Servo Motor"), centerTitle: true),
       body: Builder(builder: (BuildContext context) {
         scaffoldContext = context;
         return Center(
