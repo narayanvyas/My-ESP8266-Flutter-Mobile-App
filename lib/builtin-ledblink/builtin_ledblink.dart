@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:esys_flutter_share/esys_flutter_share.dart';
 import './code.dart';
-import 'package:image_picker_saver/image_picker_saver.dart';
+import 'package:myesp8266/download_share.dart';
 
 class BuiltinLed extends StatefulWidget {
   @override
@@ -35,9 +31,7 @@ class _BuiltinLedState extends State<BuiltinLed> {
       body: Center(
         child: ListView(
           children: <Widget>[
-            Container(
-              child: Image.asset('assets/1_builtin_led_gd.jpeg')
-            ),
+            Container(child: Image.asset('assets/1_builtin_led_gd.jpeg')),
             RaisedButton(
               child: Text("View Code"),
               onPressed: () {
@@ -50,16 +44,17 @@ class _BuiltinLedState extends State<BuiltinLed> {
             RaisedButton(
               child: Text("Download Image"),
               onPressed: () {
-                _onImageSaveButtonPressed(
-                    'https://raw.githubusercontent.com/narayanvyas/Human-Detector-With-PIR-HC-SR501-And-Ultrasonic-Sensor-HC-SR04/master/Breadboard%20Diagram.jpeg');
+                downloadFile(
+                    'https://raw.githubusercontent.com/narayanvyas/Human-Detector-With-PIR-HC-SR501-And-Ultrasonic-Sensor-HC-SR04/master/Breadboard%20Diagram.jpeg',
+                    'Builtin LED Blink Graphical Diagram');
               },
             ),
             RaisedButton(
               child: Text("Share Image"),
               onPressed: () async {
-                final ByteData bytes = await rootBundle.load('assets/1_builtin_led_gd.jpeg');
-                await EsysFlutterShare.shareImage('graphical_diagram.jpeg', bytes, 'Graphical Diagram');
-                },
+                shareImage('assets/1_builtin_led_gd.jpeg',
+                    'graphical_diagram.jpeg');
+              },
             ),
             Text(
               'My LED ',
@@ -73,11 +68,4 @@ class _BuiltinLedState extends State<BuiltinLed> {
       ),
     );
   }
-}
-
-void _onImageSaveButtonPressed(String url) async {
-  var response = await http.get(url);
-  var filePath = await ImagePickerSaver.saveFile(fileData: response.bodyBytes);
-  var savedFile = File.fromUri(Uri.file(filePath));
-  print(savedFile);
 }
