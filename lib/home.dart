@@ -31,7 +31,7 @@ class _HomeState extends State<Home> {
           addAutomaticKeepAlives: true,
           crossAxisSpacing: 20.0,
           children: <Widget>[
-            projectGridBlock('PIR Sensor', 'builtin_led'),
+            projectGridBlock('Builtin LED Blink', 'builtin_led'),
             projectGridBlock("SERVO MOTOR", 'servo_motor'),
             projectGridBlock("STEPPER MOT.", 'builtin_led'),
             projectGridBlock("ARDUINO UNO", 'servo_motor'),

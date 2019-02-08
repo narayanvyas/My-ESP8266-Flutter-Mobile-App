@@ -68,7 +68,7 @@ class _CodePageState extends State<CodePage> {
                 heroTag: 'shareBtn',
                 child: Icon(Icons.share),
                 onPressed: () {
-                  shareUrl('https://www.narayanvyas.org/demo.html');
+                  shareUrl(widget.downloadLink);
                 },
               ),
             ),

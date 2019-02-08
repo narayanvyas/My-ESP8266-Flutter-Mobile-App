@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:myesp8266/route_page.dart';
 
+//Code for Snackbar
 BuildContext scaffoldContext;
+
 displaySnackBar(BuildContext context, String msg) {
   final snackBar = SnackBar(
     content: Text(msg),
@@ -20,18 +22,76 @@ class BuiltinLed extends StatefulWidget {
 }
 
 class _BuiltinLedState extends State<BuiltinLed> {
-  String _status = "";
-  String _btnText = "LED-";
-  String url = 'http://192.168.1.200:80/';
+  @override
+  void initState() {
+    super.initState();
+    getInitLedState(); // Getting initial state of LED, which is by default on
+  }
+
+  String _status = '';
+  String url =
+      'http://192.168.1.200:80/'; //IP Address which is configured in NodeMCU Sketch
   var response;
 
-  ledRequest() async {
-    response = await http.get(url + 'led', headers: {"Accept": "plain/text"});
+  getInitLedState() async {
+    try {
+      response = await http.get(url, headers: {"Accept": "plain/text"});
+      setState(() {
+        _status = 'On';
+      });
+    } catch (e) {
+      // If NodeMCU is not connected, it will throw error
+      print(e);
+      if (this.mounted) {
+        setState(() {
+          _status = 'Not Connected';
+        });
+      }
+    }
+  }
 
-    setState(() {
-      _status = response.body;
-      print(response.body);
-    });
+  toggleLed() async {
+    try {
+      response = await http.get(url + 'led', headers: {"Accept": "plain/text"});
+      setState(() {
+        _status = response.body;
+        print(response.body);
+      });
+    } catch (e) {
+      // If NodeMCU is not connected, it will throw error
+      print(e);
+      displaySnackBar(context, 'Module Not Connected');
+    }
+  }
+
+  turnOnLed() async {
+    try {
+      response =
+          await http.get(url + 'led/on', headers: {"Accept": "plain/text"});
+      setState(() {
+        _status = response.body;
+        print(response.body);
+      });
+    } catch (e) {
+      // If NodeMCU is not connected, it will throw error
+      print(e);
+      displaySnackBar(context, 'Module Not Connected');
+    }
+  }
+
+  turnOffLed() async {
+    try {
+      response =
+          await http.get(url + 'led/off', headers: {"Accept": "plain/text"});
+      setState(() {
+        _status = response.body;
+        print(response.body);
+      });
+    } catch (e) {
+      // If NodeMCU is not connected, it will throw error
+      print(e);
+      displaySnackBar(context, 'Module Not Connected');
+    }
   }
 
   @override
@@ -60,13 +120,30 @@ class _BuiltinLedState extends State<BuiltinLed> {
                       projectGridBlock("NodeMCU Source Code", 'nodemcuPage'),
                     ],
                   )),
+              Container(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    RaisedButton(
+                      onPressed: toggleLed,
+                      child: Text('Toggle LED'),
+                    ),
+                    RaisedButton(
+                      onPressed: turnOnLed,
+                      child: Text('Turn LED On'),
+                    ),
+                    RaisedButton(
+                      onPressed: turnOffLed,
+                      child: Text('Turn LED Off'),
+                    ),
+                  ],
+                ),
+              ),
               Text(
-                'My LED ',
-              ),
-              RaisedButton(
-                onPressed: ledRequest,
-                child: Text(_btnText + _status),
-              ),
+                'LED Status: $_status',
+                textAlign: TextAlign.center,
+              )
             ],
           ),
         );
@@ -108,17 +185,19 @@ class _BuiltinLedState extends State<BuiltinLed> {
             gdPath: 'assets/1_builtin_led_gd.jpeg',
             cdPath: 'assets/1_builtin_led_cd.jpeg',
             gdImgUrl:
-                'https://raw.githubusercontent.com/narayanvyas/Human-Detector-With-PIR-HC-SR501-And-Ultrasonic-Sensor-HC-SR04/master/Breadboard%20Diagram.jpeg',
+                'https://github.com/narayanvyas/NodeMCU-ESP8266-Builtin-LED-Control-With-Flutter-App/raw/master/Graphical%20Diagram.jpeg',
             gdImgTitle: 'Builtin LED Blink Graphical Diagram',
             cdImgUrl:
-                'https://raw.githubusercontent.com/narayanvyas/Human-Detector-With-PIR-HC-SR501-And-Ultrasonic-Sensor-HC-SR04/master/Breadboard%20Diagram.jpeg',
+                'https://github.com/narayanvyas/NodeMCU-ESP8266-Builtin-LED-Control-With-Flutter-App/raw/master/Circuit%20Diagram.jpeg',
             cdImgTitle: 'Builtin LED Blink Circuit Diagram',
-            flutterCodeUrl: 'https://www.narayanvyas.org/demo.html',
+            flutterCodeUrl:
+                'https://github.com/narayanvyas/NodeMCU-ESP8266-Builtin-LED-Control-With-Flutter-App/blob/master/lib/main.dart',
             flutterDownloadLink:
-                'https://github.com/narayanvyas/My-ESP8266-Flutter-Mobile-App/blob/master/lib/home.dart',
-            nodemcuCodeUrl: 'https://www.narayanvyas.org/demo.html',
+                'https://raw.githubusercontent.com/narayanvyas/NodeMCU-ESP8266-Builtin-LED-Control-With-Flutter-App/master/lib/main.dart',
+            nodemcuCodeUrl:
+                'https://github.com/narayanvyas/NodeMCU-ESP8266-Builtin-LED-Control-With-Flutter-App/blob/master/NodeMCU_Source_Code/NodeMCU_Source_Code.ino',
             nodemcuDownloadLink:
-                'https://raw.githubusercontent.com/narayanvyas/Human-Detector-With-PIR-HC-SR501-And-Ultrasonic-Sensor-HC-SR04/master/Source_Code/Source_Code.ino');
+                'https://raw.githubusercontent.com/narayanvyas/NodeMCU-ESP8266-Builtin-LED-Control-With-Flutter-App/master/NodeMCU_Source_Code/NodeMCU_Source_Code.ino');
       },
     );
   }
