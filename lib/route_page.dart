@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myesp8266/builtin-ledblink/builtin_ledblink.dart';
 import 'package:myesp8266/code_page.dart';
+import 'package:myesp8266/dht/dht.dart';
 import 'package:myesp8266/image_page.dart';
-import 'package:myesp8266/servo-motor/servo_motor.dart';
 
 class MainPageRoute {
   BuildContext context;
@@ -11,9 +11,9 @@ class MainPageRoute {
     if (mainPageCode == 'builtin_led') {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (_) => BuiltinLed()));
-    } else if (mainPageCode == 'servo_motor') {
+    } else if (mainPageCode == 'dht') {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (_) => ServoMotor()));
+          .push(MaterialPageRoute(builder: (_) => DHT()));
     }
   }
 }

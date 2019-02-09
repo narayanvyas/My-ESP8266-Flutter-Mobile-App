@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:myesp8266/download_share.dart';
 import 'package:myesp8266/route_page.dart';
 
 //Code for Snackbar
@@ -148,6 +149,13 @@ class _BuiltinLedState extends State<BuiltinLed> {
           ),
         );
       }),
+      floatingActionButton: FloatingActionButton(
+        heroTag: 'shareBtn',
+        child: Icon(Icons.share),
+        onPressed: () {
+          shareUrl('https://github.com/narayanvyas/NodeMCU-ESP8266-Builtin-LED-Control-With-Flutter-App');
+        },
+      ),
     );
   }
 

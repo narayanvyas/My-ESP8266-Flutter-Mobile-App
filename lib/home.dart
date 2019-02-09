@@ -32,9 +32,7 @@ class _HomeState extends State<Home> {
           crossAxisSpacing: 20.0,
           children: <Widget>[
             projectGridBlock('Builtin LED Blink', 'builtin_led'),
-            projectGridBlock("SERVO MOTOR", 'servo_motor'),
-            projectGridBlock("STEPPER MOT.", 'builtin_led'),
-            projectGridBlock("ARDUINO UNO", 'servo_motor'),
+            projectGridBlock("Temperature With DHT11 / DHT22 Sensor", 'dht'),
           ],
         ));
       }),

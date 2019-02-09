@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myesp8266/builtin-ledblink/builtin_ledblink.dart';
-import 'package:myesp8266/servo-motor/servo_motor.dart';
+import 'package:myesp8266/dht/dht.dart';
 
 class NavigationMenus extends StatelessWidget {
   @override
@@ -31,17 +31,13 @@ class NavigationMenus extends StatelessWidget {
           },
         ),
         ListTile(
-          title: Text('Servo Motor'),
+          title: Text('Temperature With DHT11 / DHT22'),
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ServoMotor()),
+              MaterialPageRoute(builder: (context) => DHT()),
             );
           },
-        ),
-        ListTile(
-          title: Text('LED Blink'),
-          onTap: () {},
         ),
       ],
     );
