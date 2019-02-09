@@ -143,7 +143,7 @@ class _DHTState extends State<DHT> {
                         ),
                         Container(
                             margin: const EdgeInsets.only(top: 15.0),
-                            child: Text(c)),
+                            child: Text(f)),
                       ],
                     ),
                   ),
